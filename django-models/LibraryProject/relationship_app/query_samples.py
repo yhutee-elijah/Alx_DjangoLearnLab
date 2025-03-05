@@ -2,18 +2,19 @@ import os
 import django
 
 # Setup Django environment
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django-models.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_models.settings")
 django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
 
 # Query all books by a specific author
 def get_books_by_author(author_name):
-    author = Author.objects.filter(name=author_name).first()
-    if author:
+    try:
+        author = Author.objects.get(name=author_name)
         books = Book.objects.filter(author=author)
         return [book.title for book in books]
-    return []
+    except Author.DoesNotExist:
+        return []
 
 # List all books in a specific library
 def get_library_by_name(library_name):
@@ -23,7 +24,7 @@ def get_library_by_name(library_name):
     return []
 
 # Retrieve the librarian for a library
-def get_library_by_name(library_name):
+def get_librarian_for_library(library_name):
     try:
         library = Library.objects.get(name=library_name)
         return library.librarian.name
