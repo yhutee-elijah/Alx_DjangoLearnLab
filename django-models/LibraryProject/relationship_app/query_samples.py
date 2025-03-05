@@ -23,14 +23,15 @@ def get_library_by_name(library_name):
     return []
 
 # Retrieve the librarian for a library
-def get_librarian_for_library(library_name):
-    library = Library.objects.filter(name=library_name).first()
-    if library and hasattr(library, 'librarian'):
+def get_library_by_name(library_name):
+    try:
+        library = Library.objects.get(name=library_name)
         return library.librarian.name
-    return None
+    except Library.DoesNotExist:
+        return None
 
 # Example usage (assuming database has data)
 if __name__ == "__main__":
     print("Books by J.K. Rowling:", get_books_by_author("J.K. Rowling"))
-    print("Books in Central Library:", get_books_in_library("Central Library"))
+    print("Books in Central Library:", get_library_by_name("Central Library"))
     print("Librarian of City Library:", get_librarian_for_library("City Library"))
