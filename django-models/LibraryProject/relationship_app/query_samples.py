@@ -27,8 +27,9 @@ def get_library_by_name(library_name):
 def get_librarian_for_library(library_name):
     try:
         library = Library.objects.get(name=library_name)
-        return library.librarian.name
-    except Library.DoesNotExist:
+        librarian = Librarian.objects.get(library=library)
+        return librarian.name
+    except (Library.DoesNotExist, Librarian.DoesNotExist):
         return None
 
 # Example usage (assuming database has data)
