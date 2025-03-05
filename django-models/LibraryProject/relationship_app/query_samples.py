@@ -16,7 +16,7 @@ def get_books_by_author(author_name):
     return []
 
 # List all books in a specific library
-def get_books_in_library(library_name):
+def get_library_by_name(library_name):
     library = Library.objects.filter(name=library_name).first()
     if library:
         return [book.title for book in library.books.all()]
