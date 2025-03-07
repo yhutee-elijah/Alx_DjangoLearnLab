@@ -4,14 +4,12 @@ from .models import Book, Library, UserProfile  # Import Book model
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Library 
+from django.shortcuts import redirect
 
 # Function-based view to list all books
 def list_books(request):
     books = Book.objects.all()  # Get all books from the database
     return render(request, 'relationship_app/list_books.html', {'books': books})  # Pass books to the template
-from django.views.generic.detail import DetailView
-from .models import Library
 
 # Class-based view to show details of a specific library
 class LibraryDetailView(DetailView):
