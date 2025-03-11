@@ -5,7 +5,25 @@ from .models import Book, Library, UserProfile  # Import Book model
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import HttpResponseForbidden
+from .models import UserProfile
 from django.shortcuts import redirect
+
+@login_required
+def admin_dashboard(request):
+    try:
+        # Get the logged-in user's profile
+        user_profile = UserProfile.objects.get(user=request.user)
+        
+        # Check if the user is an Admin
+        if user_profile.role == "Admin":
+            return render(request, "admin_dashboard.html")  # Render the Admin page
+        else:
+            return HttpResponseForbidden("You are not authorized to view this page.")  # Restrict access
+        
+    except UserProfile.DoesNotExist:
+        return HttpResponseForbidden("UserProfile not found. You are not authorized.")
+
 
 # Function-based view to list all books
 def list_books(request):
