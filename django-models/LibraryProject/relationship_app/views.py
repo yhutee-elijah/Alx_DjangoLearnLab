@@ -9,8 +9,13 @@ from django.http import HttpResponseForbidden
 from .models import UserProfile
 from django.shortcuts import redirect
 
+def is_admin(user):
+    return user.is_authenticated and UserProfile.objects.get(user=user).role == "Admin"
+
 @login_required
-def admin_dashboard(request):
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_dashboard.html')
     try:
         # Get the logged-in user's profile
         user_profile = UserProfile.objects.get(user=request.user)
