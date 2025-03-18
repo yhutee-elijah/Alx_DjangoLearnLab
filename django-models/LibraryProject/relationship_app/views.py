@@ -4,6 +4,7 @@ from .models import Book, Library, UserProfile
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseForbidden
 from .forms import BookForm  # Import BookForm
 from django.urls import reverse
