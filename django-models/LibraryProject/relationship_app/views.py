@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseForbidden
-from relationship_app.forms import BookForm  # Import BookForm
+from .forms import BookForm  # Import BookForm
 from django.urls import reverse
 
 @login_required
