@@ -4,9 +4,18 @@ class Book(models.Model):
     title = models.CharField(max_length=200)  # Book title (max 200 characters)
     author = models.CharField(max_length=100)  # Author name (max 100 characters)
     publication_year = models.IntegerField()  # Year of publication
+    isbn = models.CharField(max_length=13)
 
-    def __str__(self):
-        return f"{self.title} by {self.author} ({self.publication_year})"
+class Meta:
+        permissions = [
+            ("can_view", "Can view book"),
+            ("can_create", "Can create book"),
+            ("can_edit", "Can edit book"),
+            ("can_delete", "Can delete book"),
+        ]
+
+def __str__(self):
+        return self.title 
     
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None, date_of_birth=None, profile_photo=None):
