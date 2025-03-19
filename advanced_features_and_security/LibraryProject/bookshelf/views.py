@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
 from .models import Book
+from .forms import ExampleForm
 
 # 📘 View Book List (For Viewers, Editors, Admins)
 @permission_required('bookshelf.can_view', raise_exception=True)
@@ -37,3 +38,6 @@ def delete_book(request, book_id):
     book.delete()
     return redirect('book_list')
 
+def example_view(request):
+    form = ExampleForm()
+    return render(request, 'bookshelf/form_example.html', {'form': form})

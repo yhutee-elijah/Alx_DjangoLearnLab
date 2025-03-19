@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseForbidden
-from .forms import BookForm, ExampleForm  # Import BookForm
+from .forms import BookForm # Import BookForm
 from django.urls import reverse
 
 @login_required
@@ -104,6 +104,3 @@ def search_books(request):
     books = Book.objects.filter(title__icontains=title)
     return render(request, 'bookshelf/book_list.html', {'books': books})
 
-def example_view(request):
-    form = ExampleForm()
-    return render(request, 'bookshelf/form_example.html', {'form': form})
