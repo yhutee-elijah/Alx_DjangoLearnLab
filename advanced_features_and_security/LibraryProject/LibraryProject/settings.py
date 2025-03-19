@@ -140,3 +140,27 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 AUTH_USER_MODEL = "bookshelf.CustomUser"
 
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Tell browsers to only use HTTPS for your site (for 1 year)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+
+# Apply this rule to all subdomains
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# Allow your site to be preloaded by browsers (Optional but recommended)
+SECURE_HSTS_PRELOAD = True
+
+# Ensure cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Prevent your site from being displayed in a frame (prevents clickjacking)
+X_FRAME_OPTIONS = 'DENY'
+
+# Block the browser from guessing content types (prevents MIME sniffing)
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable browser protection against cross-site scripting attacks
+SECURE_BROWSER_XSS_FILTER = True
