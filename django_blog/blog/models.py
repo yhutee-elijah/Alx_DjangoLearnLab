@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User  # Ensure this import is present
+from django.contrib.auth.models import User, title, content, author, published_date   # Ensure this import is present
 
 class Post(models.Model):
     title = models.CharField(max_length=200)  # Title field
