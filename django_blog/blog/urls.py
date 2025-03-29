@@ -4,6 +4,7 @@ from .views import register_view, profile_view, profile_edit_view, CustomLogoutV
 from .views import (
     PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView,
 )
+from .views import add_comment, CommentUpdateView, CommentDeleteView
 
 urlpatterns = [
     path("login/", LoginView.as_view(template_name="blog/login.html"), name="login"),
@@ -16,5 +17,8 @@ urlpatterns = [
     path("post/new/", PostCreateView.as_view(), name="post-create"),
     path("post/<int:pk>/update/", PostUpdateView.as_view(), name="post-update"),
     path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
+    path("post/<int:post_id>/comments/new/", add_comment, name="add-comment"),
+    path("comment/<int:pk>/edit/", CommentUpdateView.as_view(), name="edit-comment"),
+    path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="delete-comment"),
 ]
 
