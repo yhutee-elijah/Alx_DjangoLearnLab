@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from notifications.models import Notification
 
 class FeedView(ListAPIView):
     serializer_class = PostSerializer
@@ -39,7 +40,7 @@ class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, post_id):
-        post = get_object_or_404(Post, pk=post_id)
+        post = get_object_or_404(Post, pk=pk)
         if not post:
             return Response({"error": "Post not found"}, status=404)
 
@@ -53,7 +54,7 @@ class UnlikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, post_id):
-        post = Post.objects.filter(id=post_id).first()
+        post = get_object_or_404(Post, pk=pk)
         if not post:
             return Response({"error": "Post not found"}, status=404)
 
