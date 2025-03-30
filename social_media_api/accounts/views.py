@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate
-from rest_framework import generics
+from rest_framework import generics, permissions 
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -11,6 +11,40 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets
 from .models import CustomUser 
+
+User = get_user_model()
+
+class FollowUserView(generics.GenericAPIView):
+    """Allows a user to follow another user."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, user_id):
+        user_to_follow = User.objects.filter(id=user_id).first()
+
+        if not user_to_follow:
+            return Response({"error": "User not found"}, status=404)
+
+        if request.user == user_to_follow:
+            return Response({"error": "You cannot follow yourself"}, status=400)
+
+        request.user.following.add(user_to_follow)
+        return Response({"message": f"You are now following {user_to_follow.username}"}, status=200)
+
+class UnfollowUserView(generics.GenericAPIView):
+    """Allows a user to unfollow another user."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, user_id):
+        user_to_unfollow = User.objects.filter(id=user_id).first()
+
+        if not user_to_unfollow:
+            return Response({"error": "User not found"}, status=404)
+
+        if request.user == user_to_unfollow:
+            return Response({"error": "You cannot unfollow yourself"}, status=400)
+
+        request.user.following.remove(user_to_unfollow)
+        return Response({"message": f"You have unfollowed {user_to_unfollow.username}"}, status=200)
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
