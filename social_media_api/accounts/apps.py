@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 
-class UsersConfig(AppConfig):
+class AccountsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'users'
-    verbose_name = 'User Management'
+    name = 'accounts'  # Ensure this matches the app's directory name
