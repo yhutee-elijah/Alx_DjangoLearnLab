@@ -39,7 +39,7 @@ class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, post_id):
-        post = Post.objects.filter(id=post_id).first()
+        post = get_object_or_404(Post, pk=post_id)
         if not post:
             return Response({"error": "Post not found"}, status=404)
 
