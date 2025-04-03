@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions, filters
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, permissions, filters, generics
 from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer, LikeSerializer
 from rest_framework.generics import get_object_or_404  # Import from generics
@@ -8,6 +9,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from notifications.models import Notification
+
 
 class FeedView(ListAPIView):
     serializer_class = PostSerializer
@@ -36,12 +38,14 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+generics.get_object_or_404 = get_object_or_404  # Override the default get_object_or_404        
+
 class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, post_id):
+    def post(self, request, pk):
         # Use generics.get_object_or_404
-        post = generics.get_object_or_404(Post, pk=post_id)
+        post = generics.get_object_or_404(Post, pk=pk)
 
         like, created = Like.objects.get_or_create(user=request.user, post=post)
 
