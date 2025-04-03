@@ -120,6 +120,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Security settings for production
+SECURE_BROWSER_XSS_FILTER = True  # Protects against XSS attacks
+X_FRAME_OPTIONS = 'DENY'  # ✅ Prevents clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents the browser from MIME-sniffing responses
+SECURE_SSL_REDIRECT = True  # Redirects all HTTP traffic to HTTPS
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
