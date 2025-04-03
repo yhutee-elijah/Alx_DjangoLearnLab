@@ -40,7 +40,7 @@ class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, post_id):
-        post = get_object_or_404(Post, pk=pk)
+        post = get_object_or_404(Post, pk=post_id)
 
         like, created = Like.objects.get_or_create(user=request.user, post=post)
 
@@ -58,7 +58,7 @@ class UnlikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, post_id):
-        post = get_object_or_404(Post, pk=pk)
+        post = get_object_or_404(Post, pk=post_id)
 
         like = Like.objects.filter(user=request.user, post=post)
         if like.exists():
